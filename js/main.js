@@ -83,6 +83,7 @@ function initMap() {
             position: new google.maps.LatLng(locations[i][1], locations[i][2]),
             map: map,
             animation: google.maps.Animation.DROP,
+            icon: 'img/mountainIcon.png'
         });
 
         var infowindow = new google.maps.InfoWindow();
