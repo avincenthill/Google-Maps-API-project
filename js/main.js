@@ -1,5 +1,5 @@
 "use strict";
-
+// Draws and styles the map.
 function initMap() {
     // Create an array of styles.
     var styles = [
@@ -47,7 +47,6 @@ function initMap() {
     ]
   }, {}
 ];
-
     // Creates a new StyledMapType object, passing it the array of styles, as well as the name to be displayed on the map type control.
     var styledMap = new google.maps.StyledMapType(styles, {
         name: "Styled Map"
@@ -56,6 +55,7 @@ function initMap() {
     // Creates a map object, and includes the MapTypeId to add to the map type control.
     var mapOptions = {
         zoom: 4,
+        // Centers to the lower 48 US states
         center: new google.maps.LatLng(41, -97),
         mapTypeControlOptions: {
             mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style']
@@ -66,4 +66,31 @@ function initMap() {
     //Associates the styled map with the MapTypeId and set it to display. 
     map.mapTypes.set('map_style', styledMap);
     map.setMapTypeId('map_style');
+
+    //Location data.
+    var locations = [
+      ['Mt. Everest', 27.9880556, 86.9252778, 4],
+      ['Coogee Beach', -33.923036, 151.259052, 5],
+      ['Cronulla Beach', -34.028249, 151.157507, 3],
+      ['Manly Beach', -33.80010128657071, 151.28747820854187, 2],
+      ['Maroubra Beach', -33.950198, 151.259302, 1]
+    ];
+
+    //Draws markers and displays data on mouse click.
+    var marker, i;
+    for (i = 0; i < locations.length; i++) {
+        marker = new google.maps.Marker({
+            position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+            map: map,
+            animation: google.maps.Animation.DROP,
+        });
+
+        var infowindow = new google.maps.InfoWindow();
+        google.maps.event.addListener(marker, 'click', (function (marker, i) {
+            return function () {
+                infowindow.setContent(locations[i][0]);
+                infowindow.open(map, marker);
+            }
+        })(marker, i));
+    }
 }
