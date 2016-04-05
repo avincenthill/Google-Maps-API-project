@@ -67,10 +67,10 @@ function initMap() {
     map.mapTypes.set('map_style', styledMap);
     map.setMapTypeId('map_style');
 
-    //Location data.
+    //Array of location and other data.
     var locations = [
       ['Mt. Everest', 27.9880556, 86.9252778, 4],
-      ['Coogee Beach', -33.923036, 151.259052, 5],
+      ['Mt. McKinley (Denali)', 63.0694444, -151.0077778, 5],
       ['Cronulla Beach', -34.028249, 151.157507, 3],
       ['Manly Beach', -33.80010128657071, 151.28747820854187, 2],
       ['Maroubra Beach', -33.950198, 151.259302, 1]
@@ -79,11 +79,16 @@ function initMap() {
     //Draws markers and displays data on mouse click.
     var marker, i;
     for (i = 0; i < locations.length; i++) {
+        var icon = {
+            url: 'img/mountainIcon.png',
+            scaledSize: new google.maps.Size(locations[i][3] * 10, locations[i][3] * 10), // scaled size
+        };
+
         marker = new google.maps.Marker({
             position: new google.maps.LatLng(locations[i][1], locations[i][2]),
             map: map,
             animation: google.maps.Animation.DROP,
-            icon: 'img/mountainIcon.png'
+            icon: icon
         });
 
         var infowindow = new google.maps.InfoWindow();
